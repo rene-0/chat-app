@@ -1,10 +1,10 @@
+import { Login } from '../../modules/login/login'
 import './App.css'
 
 function App() {
-
   return (
     <div className='app'>
-      aaa
+      <Login />
     </div>
   )
 }

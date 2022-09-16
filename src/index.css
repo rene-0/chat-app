@@ -1,4 +1,8 @@
 body {
-  background-color: #1E1E1E;
-  font-family: 'Roboto', sans-serif;
+  background-color: #1e1e1e;
+  font-family: "Roboto", sans-serif;
+  position: relative;
+  min-width: 100vh;
+  min-height: 100vh;
+  margin: 0px;
 }

@@ -1,0 +1,10 @@
+.app {
+  padding: 10px;
+  background-color: #1a1a1a;
+  color: white;
+  width: 800px;
+  height: 800px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
