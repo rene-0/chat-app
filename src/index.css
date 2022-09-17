@@ -1,8 +1,34 @@
+@import url('@/main/config/vars.css');
+
+* {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
+
 body {
   background-color: #1e1e1e;
-  font-family: "Roboto", sans-serif;
   position: relative;
   min-width: 100vh;
   min-height: 100vh;
   margin: 0px;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--tertiary-color);
+  border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-text);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

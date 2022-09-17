@@ -1,0 +1,32 @@
+.message {
+  width: 98%;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-border-color);
+  border-radius: 5px;
+}
+
+.message .message-head {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.message .message-head .message-user {
+  width: 90%;
+  font-size: 1.13rem;
+  font-weight: 600;
+}
+
+.message .message-head .message-time {
+  width: 10%;
+  text-align: right;
+  font-weight: 100;
+  font-size: 0.85rem;
+}
+
+.message.you {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-border-color);
+  align-self: end;
+}

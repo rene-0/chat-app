@@ -1,5 +1,3 @@
-@import url('@/main/config/vars.css');
-
 .login {
   color: var(--primary-text);
   display: flex;

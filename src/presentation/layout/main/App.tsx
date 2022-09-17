@@ -1,10 +1,12 @@
-import { Login } from '../../modules/login/login'
+import { Chat } from '@/presentation/modules/chat/chat'
+import { Login } from '@/presentation/modules/login/login'
 import './App.css'
 
-function App() {
+function App(): JSX.Element {
   return (
     <div className='app'>
-      <Login />
+      {/* <Login /> */}
+      <Chat />
     </div>
   )
 }
