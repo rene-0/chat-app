@@ -1,12 +1,30 @@
+import { LoginUser } from '@/domain/usecases/authentication/login-user'
+import { authenticationState } from '@/presentation/components/atom'
 import { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 import './login.css'
 
-export function Login(): JSX.Element {
+type LoginProps = {
+  remoteLogin: LoginUser
+}
+
+export function Login({ remoteLogin }: LoginProps): JSX.Element {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = (): void => {
-    console.log(email)
+  const setAuthentication = useSetRecoilState(authenticationState)
+
+  const handleLogin = async (): Promise<void> => {
+    try {
+      const loginResponse = await remoteLogin.login({
+        email,
+        password,
+      })
+
+      setAuthentication(loginResponse)
+    } catch (error) {
+      console.log('Erro!')
+    }
   }
 
   return (
