@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import './room.css'
 
 type RoomProps = {
@@ -7,12 +8,9 @@ type RoomProps = {
   lastMessage: string
 }
 
-export function Room({
-  image,
-  name,
-  lastMessage,
-  lastMessageTime,
-}: RoomProps): JSX.Element {
+export function Room({ image, name, lastMessage, lastMessageTime }: RoomProps): JSX.Element {
+  const parsedDay = dayjs(lastMessageTime).format('DD/MM/YY')
+
   return (
     <div className='chat-room'>
       <div
@@ -21,7 +19,7 @@ export function Room({
       />
       <div className='room-body'>
         <div className='room-title'>{name}</div>
-        <div className='room-last-time'>{lastMessageTime}</div>
+        <div className='room-last-time'>{parsedDay}</div>
         <div className='room-last-message'>{lastMessage}</div>
       </div>
     </div>
