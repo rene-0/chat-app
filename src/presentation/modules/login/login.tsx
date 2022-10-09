@@ -1,4 +1,5 @@
 import { LoginUser } from '@/domain/usecases/authentication/login-user'
+import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { authenticationState } from '@/presentation/components/atom'
 import { useState } from 'react'
 import { useSetRecoilState } from 'recoil'
@@ -21,7 +22,11 @@ export function Login({ remoteLogin }: LoginProps): JSX.Element {
         password,
       })
 
+      socketClient.auth = { accessToken: loginResponse.accessToken }
+      socketClient.connect()
+
       setAuthentication(loginResponse)
+      localStorage.setItem('accessToken', loginResponse.accessToken.token)
     } catch (error) {
       console.log('Erro!')
     }
