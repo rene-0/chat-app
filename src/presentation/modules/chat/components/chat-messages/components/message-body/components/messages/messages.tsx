@@ -1,3 +1,4 @@
+import { SearchAllRoomMessages } from '@/domain/usecases/room-messages/search-all-room-messages'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { useEffect, useState } from 'react'
 import { Message } from './components/message/message'
@@ -14,8 +15,27 @@ type MessageModel = {
 
 type Response = MessageModel
 
-export function Messages() {
+type Props = {
+  remoteSearchRoomMessages: SearchAllRoomMessages
+}
+
+export function Messages({ remoteSearchRoomMessages }: Props) {
   const [messages, setMessages] = useState<MessageModel[]>([])
+  const useAuthenticationState = useRecoilValue(authenticationState)
+
+  const loadOldMessages = async () => {
+    const allMessages = await remoteSearchRoomMessages.searchAllRoomMessages({ idRoom: 1 })
+    const newMessages = allMessages.map(
+      ({ idRoomMessage, message, time, user, sender }): MessageModel => ({
+        idMessage: idRoomMessage,
+        message,
+        time,
+        user,
+        sender,
+      })
+    )
+    setMessages(newMessages)
+  }
 
   const roomMessage = (response: Response) => {
     // TEM QUE USAR COMO CALLBACK, QUALQUER COISA CHAMADA DENTRO DE SOCKET.ON NÃO TEM ACESSO AO VALOR DO ESTADO NO REACT
@@ -43,6 +63,10 @@ export function Messages() {
       socketClient.offAny()
     }
   }, [socketClient])
+
+  useEffect(() => {
+    loadOldMessages()
+  }, [])
 
   return (
     <div className='messages'>
