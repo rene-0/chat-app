@@ -15,6 +15,12 @@ export function MessageInput() {
     setMessage('')
   }
 
+  const handleEnter = async (event: React.KeyboardEvent<HTMLInputElement>, callback: (event: React.KeyboardEvent<HTMLInputElement>) => Promise<void> | void) => {
+    if (event.key === 'Enter') {
+      await callback(event)
+    }
+  }
+
   return (
     <div className='message-input'>
       <input
@@ -23,6 +29,7 @@ export function MessageInput() {
         onChange={(event) => {
           setMessage(event.currentTarget.value)
         }}
+        onKeyDown={(event) => handleEnter(event, sendMessage)}
       />
       <button onClick={sendMessage}>
         <SendOutlined />
