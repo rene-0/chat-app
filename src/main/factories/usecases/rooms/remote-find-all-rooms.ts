@@ -1,6 +1,7 @@
 import { RemoteFindAllRooms } from '@/data/usecases/rooms/remote-find-all-rooms'
+import { makeApiUrl } from '@/infra/http/make-api-url/make-api-url'
 import { makeAxiosHttpClient } from '../../infra/http/axios/axios-http-client-factory'
 
 export const makeRemoteFindAllRooms = (): RemoteFindAllRooms => {
-  return new RemoteFindAllRooms('http://localhost:5050/chat/rooms/findAll', makeAxiosHttpClient())
+  return new RemoteFindAllRooms(makeApiUrl('chat/rooms/findAll'), makeAxiosHttpClient())
 }
