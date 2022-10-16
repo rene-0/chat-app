@@ -1,6 +1,8 @@
 import { SearchAllRoomMessages } from '@/domain/usecases/room-messages/search-all-room-messages'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
+import { authenticationState } from '@/presentation/components/atom'
 import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { Message } from './components/message/message'
 
 import './messages.css'
@@ -10,7 +12,7 @@ type MessageModel = {
   user: string
   time: string
   message: string
-  you: boolean
+  sender: string
 }
 
 type Response = MessageModel
@@ -46,7 +48,7 @@ export function Messages({ remoteSearchRoomMessages }: Props) {
         message: response.message,
         time: response.time,
         user: response.user,
-        you: response.you,
+        sender: response.sender,
       },
     ])
   }
@@ -74,6 +76,7 @@ export function Messages({ remoteSearchRoomMessages }: Props) {
         <Message
           key={`message-${message.idMessage}`}
           {...message}
+          you={message.sender === useAuthenticationState?.email}
         />
       ))}
     </div>
