@@ -1,15 +1,18 @@
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
+import { selectedRoomKeyState } from '@/presentation/modules/chat/components/atom'
 import { SendOutlined } from '@ant-design/icons'
 import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 
 import './message-input.css'
 
 export function MessageInput() {
+  const useSelectedRoomKey = useRecoilValue(selectedRoomKeyState)
   const [message, setMessage] = useState('')
 
   const sendMessage = () => {
     socketClient.emit('roomMessage', {
-      chatRoom: 1,
+      chatRoom: useSelectedRoomKey,
       message: message,
     })
     setMessage('')

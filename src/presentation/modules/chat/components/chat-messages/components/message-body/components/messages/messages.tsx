@@ -1,45 +1,27 @@
+import { MessageModel } from '@/domain/models/message/message-model'
 import { SearchAllRoomMessages } from '@/domain/usecases/room-messages/search-all-room-messages'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { authenticationState } from '@/presentation/components/atom'
-import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { chatMessageState, selectedRoomKeyState } from '@/presentation/modules/chat/components/atom'
+import { useLoadOldMessages } from '@/presentation/modules/chat/hooks/use-load-old-messages'
+import { useEffect } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { Message } from './components/message/message'
 
 import './messages.css'
-
-type MessageModel = {
-  idMessage: number
-  user: string
-  time: string
-  message: string
-  sender: string
-}
-
-type Response = MessageModel
 
 type Props = {
   remoteSearchRoomMessages: SearchAllRoomMessages
 }
 
 export function Messages({ remoteSearchRoomMessages }: Props) {
-  const [messages, setMessages] = useState<MessageModel[]>([])
+  const [useMessages, setMessages] = useRecoilState(chatMessageState)
   const useAuthenticationState = useRecoilValue(authenticationState)
+  const useSelectedRoomKey = useRecoilValue(selectedRoomKeyState)
 
-  const loadOldMessages = async () => {
-    const allMessages = await remoteSearchRoomMessages.searchAllRoomMessages({ idRoom: 1 })
-    const newMessages = allMessages.map(
-      ({ idRoomMessage, message, time, user, sender }): MessageModel => ({
-        idMessage: idRoomMessage,
-        message,
-        time,
-        user,
-        sender,
-      })
-    )
-    setMessages(newMessages)
-  }
+  const loadOldMessages = useLoadOldMessages(remoteSearchRoomMessages)
 
-  const roomMessage = (response: Response) => {
+  const roomMessage = (response: MessageModel) => {
     // TEM QUE USAR COMO CALLBACK, QUALQUER COISA CHAMADA DENTRO DE SOCKET.ON NÃO TEM ACESSO AO VALOR DO ESTADO NO REACT
     setMessages((oldMessages) => [
       ...oldMessages,
@@ -49,6 +31,8 @@ export function Messages({ remoteSearchRoomMessages }: Props) {
         time: response.time,
         user: response.user,
         sender: response.sender,
+        deleted: false,
+        edited: false,
       },
     ])
   }
@@ -68,11 +52,11 @@ export function Messages({ remoteSearchRoomMessages }: Props) {
 
   useEffect(() => {
     loadOldMessages()
-  }, [])
+  }, [useSelectedRoomKey])
 
   return (
     <div className='messages'>
-      {messages.map((message) => (
+      {useMessages.map((message) => (
         <Message
           key={`message-${message.idMessage}`}
           {...message}

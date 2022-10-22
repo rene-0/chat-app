@@ -1,18 +1,24 @@
 import dayjs from 'dayjs'
+import { MouseEventHandler } from 'react'
 import './room.css'
 
-type RoomProps = {
+type RoomProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   image: string
   name: string
   lastMessageTime: string
   lastMessage: string
+  active?: boolean
+  onClick?: MouseEventHandler<HTMLDivElement> | undefined
 }
 
-export function Room({ image, name, lastMessage, lastMessageTime }: RoomProps): JSX.Element {
+export function Room({ image, name, lastMessage, lastMessageTime, active = false, ...rest }: RoomProps): JSX.Element {
   const parsedDay = dayjs(lastMessageTime).format('DD/MM/YY')
 
   return (
-    <div className='chat-room'>
+    <div
+      className={`chat-room ${active ? 'active' : ''}`}
+      {...rest}
+    >
       <div
         className='room-avatar'
         style={{ backgroundImage: `url("${image}")` }}
