@@ -25,3 +25,8 @@ export const chatMessageState = atom<MessageModel[]>({
   key: 'chatMessageState',
   default: [],
 })
+
+export const editingMessageKeyState = atom<number>({
+  key: 'editingMessageKeyState',
+  default: 0,
+})

@@ -1,0 +1,8 @@
+.message-body .message-text {
+  display: inline-block;
+}
+
+.message-body .message-indicator {
+  margin-left: 5px;
+  display: inline-block;
+}
