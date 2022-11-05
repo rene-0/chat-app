@@ -1,3 +1,4 @@
+import { handlePressEnter } from '@/infra/helpers/handle-press-enter/handle-press-enter'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { selectedRoomKeyState } from '@/presentation/modules/chat/components/atom'
 import { SendOutlined } from '@ant-design/icons'
@@ -18,12 +19,6 @@ export function MessageInput() {
     setMessage('')
   }
 
-  const handleEnter = async (event: React.KeyboardEvent<HTMLInputElement>, callback: (event: React.KeyboardEvent<HTMLInputElement>) => Promise<void> | void) => {
-    if (event.key === 'Enter') {
-      await callback(event)
-    }
-  }
-
   return (
     <div className='message-input'>
       <input
@@ -32,7 +27,7 @@ export function MessageInput() {
         onChange={(event) => {
           setMessage(event.currentTarget.value)
         }}
-        onKeyDown={(event) => handleEnter(event, sendMessage)}
+        onKeyDown={(event) => handlePressEnter(event, sendMessage)}
       />
       <button onClick={sendMessage}>
         <SendOutlined />

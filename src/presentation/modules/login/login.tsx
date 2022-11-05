@@ -1,4 +1,5 @@
 import { LoginUser } from '@/domain/usecases/authentication/login-user'
+import { handlePressEnter } from '@/infra/helpers/handle-press-enter/handle-press-enter'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { authenticationState } from '@/presentation/components/atom'
 import { useState } from 'react'
@@ -50,6 +51,7 @@ export function Login({ remoteLogin }: LoginProps): JSX.Element {
             type='password'
             value={password}
             onChange={(event) => setPassword(event.currentTarget.value)}
+            onKeyDown={(event) => handlePressEnter(event, handleLogin)}
           />
         </div>
         <button onClick={handleLogin}>Enviar</button>
