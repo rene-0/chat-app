@@ -10,7 +10,7 @@ export function useLoadOldMessages(remoteSearchRoomMessages: SearchAllRoomMessag
   const selectedRoomKey = useRecoilValue(selectedRoomKeyState)
 
   return async () => {
-    const allMessages = await remoteSearchRoomMessages.searchAllRoomMessages({ idRoom: selectedRoomKey })
+    const allMessages = (await remoteSearchRoomMessages.searchAllRoomMessages({ idRoom: selectedRoomKey })) || []
     const newMessages = allMessages.map(
       ({ idRoomMessage, message, time, user, sender, deleted, edited }): MessageModel => ({
         idMessage: idRoomMessage,
