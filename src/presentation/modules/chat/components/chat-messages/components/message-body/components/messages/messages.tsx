@@ -82,15 +82,10 @@ export function Messages({ remoteSearchRoomMessages }: Props) {
     socketClient.on('room/updateMessage', handleEditRoomMessage)
     socketClient.on('room/deleteMessage', handleDeleteRoomMessage)
 
-    socketClient.onAny((event, ...args) => {
-      console.log('onAny', event, args)
-    })
-
     return () => {
       socketClient.off('room/message')
       socketClient.off('room/updateMessage')
       socketClient.off('room/deleteMessage')
-      socketClient.offAny()
     }
   }, [socketClient])
 

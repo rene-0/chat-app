@@ -1,4 +1,6 @@
+import { RoomModel } from '@/domain/models/room/room-model'
 import { FindAllRooms } from '@/domain/usecases/rooms/find-all-rooms'
+import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { roomsState, selectedRoomKeyState } from '../../../atom'
@@ -15,7 +17,7 @@ export function Rooms({ remoteFindAllRooms }: Props): JSX.Element {
   const [useRooms, setRooms] = useRecoilState(roomsState)
 
   const findAllRooms = async () => {
-    const allRooms = await remoteFindAllRooms.findAllRooms({})
+    const allRooms = (await remoteFindAllRooms.findAllRooms({})) || []
     setRooms(allRooms)
   }
 
@@ -26,6 +28,27 @@ export function Rooms({ remoteFindAllRooms }: Props): JSX.Element {
   useEffect(() => {
     findAllRooms()
   }, [])
+
+  useEffect(() => {
+    socketClient.on('room/new', (response: RoomModel) => {
+      setRooms((oldRooms) => {
+        console.log('oldRooms', oldRooms)
+        const newRooms = [...oldRooms]
+        console.log('newRooms', newRooms)
+        newRooms.push(response)
+
+        return newRooms
+      })
+    })
+
+    return () => {
+      socketClient.off('room/new')
+    }
+  }, [socketClient])
+
+  useEffect(() => {
+    console.log('useRooms', useRooms)
+  }, [useRooms])
 
   return (
     <div className='chat-menu-rooms'>
