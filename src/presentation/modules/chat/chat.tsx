@@ -8,13 +8,15 @@ import { useRecoilValue } from 'recoil'
 import { selectedRoomKeyState } from './components/atom'
 import { useEffect } from 'react'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
+import { FindUsersToAddToRoom } from '@/domain/usecases/users/find-users-to-add-to-room'
 
 type Props = {
   remoteFindAllRooms: FindAllRooms
   remoteSearchRoomMessages: SearchAllRoomMessages
+  findUsersToAddToRoom: FindUsersToAddToRoom
 }
 
-export function Chat({ remoteFindAllRooms, remoteSearchRoomMessages }: Props): JSX.Element {
+export function Chat({ remoteFindAllRooms, remoteSearchRoomMessages, findUsersToAddToRoom }: Props): JSX.Element {
   const useSelectedRoomKey = useRecoilValue(selectedRoomKeyState)
 
   useEffect(() => {
@@ -30,7 +32,14 @@ export function Chat({ remoteFindAllRooms, remoteSearchRoomMessages }: Props): J
   return (
     <div className='chat'>
       <ChatMenu remoteFindAllRooms={remoteFindAllRooms} />
-      {useSelectedRoomKey !== 0 ? <ChatMessage remoteSearchRoomMessages={remoteSearchRoomMessages} /> : <></>}
+      {useSelectedRoomKey !== 0 ? (
+        <ChatMessage
+          findUsersToAddToRoom={findUsersToAddToRoom}
+          remoteSearchRoomMessages={remoteSearchRoomMessages}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   )
 }

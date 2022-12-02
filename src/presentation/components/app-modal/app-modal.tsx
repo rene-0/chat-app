@@ -22,7 +22,7 @@ export function AppModal({ title, visible, onClose, children }: Props) {
             <CloseOutlined />
           </button>
         </div>
-        <div className='app-modal-body'>{children}</div>
+        <div className='app-modal-body'>{visible ? children : <></>}</div>
       </div>
     </div>
   )

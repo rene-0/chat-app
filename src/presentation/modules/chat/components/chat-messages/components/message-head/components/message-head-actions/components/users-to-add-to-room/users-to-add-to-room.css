@@ -1,0 +1,28 @@
+.user-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-border-color);
+  border-radius: 5px;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.user-item:hover,
+.user-item.active {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--secondary-border-color);
+}
+
+.user-item .user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  background-repeat: no-repeat, repeat;
+  background-position: center;
+  background-size: cover;
+}
