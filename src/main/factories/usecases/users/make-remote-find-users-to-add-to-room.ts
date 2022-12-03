@@ -3,5 +3,5 @@ import { makeApiUrl } from '@/infra/http/make-api-url/make-api-url'
 import { makeAxiosHttpClient } from '../../infra/http/axios/axios-http-client-factory'
 
 export const makeRemoteFindUsersToAddToRoom = (): RemoteFindUsersToAddToRoom => {
-  return new RemoteFindUsersToAddToRoom(makeApiUrl('users/findUsersToAddToRoom'), makeAxiosHttpClient())
+  return new RemoteFindUsersToAddToRoom(makeApiUrl('chat/users/findUsersToAddToRoom'), makeAxiosHttpClient())
 }
