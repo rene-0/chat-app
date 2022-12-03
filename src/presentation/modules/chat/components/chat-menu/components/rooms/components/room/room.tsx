@@ -12,7 +12,7 @@ type RoomProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, H
 }
 
 export function Room({ image, name, lastMessage, lastMessageTime, active = false, ...rest }: RoomProps): JSX.Element {
-  const parsedDay = dayjs(lastMessageTime).format('DD/MM/YY')
+  const parsedDay = lastMessageTime ? dayjs(lastMessageTime).format('DD/MM/YY') : ''
 
   return (
     <div
@@ -26,7 +26,7 @@ export function Room({ image, name, lastMessage, lastMessageTime, active = false
       <div className='room-body'>
         <div className='room-title'>{name}</div>
         <div className='room-last-time'>{parsedDay}</div>
-        <div className='room-last-message'>{lastMessage}</div>
+        <div className='room-last-message'>{lastMessage || 'Nenhuma mensagem'}</div>
       </div>
     </div>
   )

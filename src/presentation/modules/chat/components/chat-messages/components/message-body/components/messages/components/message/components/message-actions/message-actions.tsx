@@ -1,6 +1,7 @@
-import { editingMessageKeyState } from '@/presentation/modules/chat/components/atom'
+import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
+import { editingMessageKeyState, selectedRoomKeyState } from '@/presentation/modules/chat/components/atom'
 import { useState } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import './message-actions.css'
 
 type MessageActionsProps = {
@@ -8,6 +9,8 @@ type MessageActionsProps = {
 }
 
 export function MessageActions({ idMessage }: MessageActionsProps): JSX.Element {
+  const useSelectedRoomKey = useRecoilValue(selectedRoomKeyState)
+
   const [isDropdownVisible, setIsDropDownVisible] = useState(false)
 
   const setEditingMessageKey = useSetRecoilState(editingMessageKeyState)
@@ -18,6 +21,10 @@ export function MessageActions({ idMessage }: MessageActionsProps): JSX.Element 
   }
 
   const handleDelete = () => {
+    socketClient.emit('deleteRoomMessage', {
+      idRoom: useSelectedRoomKey,
+      idMessage,
+    })
     setIsDropDownVisible(false)
   }
 

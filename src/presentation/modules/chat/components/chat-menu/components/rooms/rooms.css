@@ -1,4 +1,6 @@
 .chat-menu-rooms {
-  height: calc(100% - 50px);
+  /* height: calc(100% - 50px); */
+  width: 100%;
+  display: inline-block;
   overflow-y: scroll;
 }
