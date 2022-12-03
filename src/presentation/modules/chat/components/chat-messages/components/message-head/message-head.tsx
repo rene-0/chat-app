@@ -1,9 +1,14 @@
-import EllipsisOutlined from '@ant-design/icons/lib/icons/EllipsisOutlined'
+import { FindUsersToAddToRoom } from '@/domain/usecases/users/find-users-to-add-to-room'
 import { useRecoilValue } from 'recoil'
 import { selectedRoomSelector } from '../../../atom'
+import { MessageHeadActions } from './components/message-head-actions/message-head-actions'
 import './message-head.css'
 
-export function MessageHead() {
+type Props = {
+  findUsersToAddToRoom: FindUsersToAddToRoom
+}
+
+export function MessageHead({ findUsersToAddToRoom }: Props) {
   const selectedRoom = useRecoilValue(selectedRoomSelector)
 
   return (
@@ -15,7 +20,7 @@ export function MessageHead() {
       <div className='message-container'>
         <div className='message-head-name'>{selectedRoom?.name}</div>
         <div className='message-head-action'>
-          <EllipsisOutlined rotate={90} />
+          <MessageHeadActions findUsersToAddToRoom={findUsersToAddToRoom} />
         </div>
         <div className='message-head-status'>
           <div className='status'></div>

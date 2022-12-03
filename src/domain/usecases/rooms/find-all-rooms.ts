@@ -9,10 +9,5 @@ export namespace FindAllRooms {
     name?: string
   }
 
-  type Rooms = RoomModel & {
-    lastMessageTime: string
-    lastMessage: string
-  }
-
-  export type Response = Rooms[]
+  export type Response = RoomModel[]
 }

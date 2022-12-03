@@ -19,6 +19,11 @@ type EditedRoomMessage = {
   message: string
 }
 
+type DeletedRoomMessage = {
+  idMessage: number
+  message: string
+}
+
 export function Messages({ remoteSearchRoomMessages }: Props) {
   const [useMessages, setMessages] = useRecoilState(chatMessageState)
   const useAuthenticationState = useRecoilValue(authenticationState)
@@ -57,18 +62,30 @@ export function Messages({ remoteSearchRoomMessages }: Props) {
     })
   }
 
+  const handleDeleteRoomMessage = (response: DeletedRoomMessage) => {
+    setMessages((oldMessages) => {
+      const editedMessageIndex = oldMessages.findIndex((message) => message.idMessage === response.idMessage)
+      const newMessages = [...oldMessages]
+
+      const newMessage = { ...newMessages[editedMessageIndex] }
+      newMessage.message = response.message
+      newMessage.deleted = true
+
+      newMessages[editedMessageIndex] = newMessage
+
+      return newMessages
+    })
+  }
+
   useEffect(() => {
     socketClient.on('room/message', roomMessage)
     socketClient.on('room/updateMessage', handleEditRoomMessage)
-
-    socketClient.onAny((event, ...args) => {
-      console.log('onAny', event, args)
-    })
+    socketClient.on('room/deleteMessage', handleDeleteRoomMessage)
 
     return () => {
       socketClient.off('room/message')
       socketClient.off('room/updateMessage')
-      socketClient.offAny()
+      socketClient.off('room/deleteMessage')
     }
   }, [socketClient])
 

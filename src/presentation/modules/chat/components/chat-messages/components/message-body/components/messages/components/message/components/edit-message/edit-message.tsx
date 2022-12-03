@@ -1,3 +1,4 @@
+import { handlePressEnter } from '@/infra/helpers/handle-press-enter/handle-press-enter'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { editingMessageKeyState, selectedRoomKeyState } from '@/presentation/modules/chat/components/atom'
 import CloseOutlined from '@ant-design/icons/lib/icons/CloseOutlined'
@@ -46,6 +47,7 @@ export function EditMessage({ idMessage }: EditMessageProps): JSX.Element {
         type='text'
         value={editedMessage}
         onChange={(event) => setEditedMessage(event.currentTarget.value)}
+        onKeyDown={(event) => handlePressEnter(event, updateMessage)}
       />
       <button onClick={updateMessage}>
         <SendOutlined />

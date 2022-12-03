@@ -1,4 +1,4 @@
-import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined'
+import { MessageIndicatorFactory } from './components/message-indicator-factory'
 import './message-text.css'
 
 type MessageTextProps = {
@@ -10,8 +10,13 @@ type MessageTextProps = {
 export function MessageText({ message, edited, deleted }: MessageTextProps): JSX.Element {
   return (
     <div className='message-body'>
-      <div className='message-text'>{message}</div>
-      <div className='message-indicator'>{edited ? <EditOutlined /> : <></>}</div>
+      <div className={`message-text ${deleted ? 'deleted' : ''}`}>{message}</div>
+      <div className='message-indicator'>
+        <MessageIndicatorFactory
+          edited={edited}
+          deleted={deleted}
+        />
+      </div>
     </div>
   )
 }

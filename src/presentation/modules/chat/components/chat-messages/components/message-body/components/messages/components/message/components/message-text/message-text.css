@@ -2,6 +2,12 @@
   display: inline-block;
 }
 
+.message-body .message-text.deleted {
+  display: inline-block;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
 .message-body .message-indicator {
   margin-left: 5px;
   display: inline-block;
