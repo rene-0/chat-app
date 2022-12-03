@@ -46,10 +46,6 @@ export function Rooms({ remoteFindAllRooms }: Props): JSX.Element {
     }
   }, [socketClient])
 
-  useEffect(() => {
-    console.log('useRooms', useRooms)
-  }, [useRooms])
-
   return (
     <div className='chat-menu-rooms'>
       {useRooms.map((room) => (
