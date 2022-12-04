@@ -13,6 +13,10 @@ export function MessageHeadActions({ findUsersToAddToRoom }: Props): JSX.Element
   const [dropdownActive, setDropdownActive] = useState(false)
   const [isModalActive, setIsModalActive] = useState(false)
 
+  const handleCloseModal = (): void => {
+    setIsModalActive(false)
+  }
+
   return (
     <>
       <div className={`message-head-actions ${dropdownActive ? 'active' : ''}`}>
@@ -25,12 +29,6 @@ export function MessageHeadActions({ findUsersToAddToRoom }: Props): JSX.Element
           <div
             className='message-head-actions-dropdown-item'
             onClick={() => setIsModalActive(true)}
-            // onClick={() => {
-            //   socketClient.emit('addUserToRoom', {
-            //     userToBeAdded: 4,
-            //     roomToAddUser: useSelectedRoomKey,
-            //   })
-            // }}
           >
             Adicionar usuário
           </div>
@@ -40,9 +38,9 @@ export function MessageHeadActions({ findUsersToAddToRoom }: Props): JSX.Element
       <AppModal
         title='Adicionar usuário'
         visible={isModalActive}
-        onClose={() => setIsModalActive(false)}
+        onClose={() => handleCloseModal()}
       >
-        <UsersToAddToRoom findUsersToAddToRoom={findUsersToAddToRoom} />
+        <UsersToAddToRoom findUsersToAddToRoom={findUsersToAddToRoom} handleCloseModal={handleCloseModal} />
       </AppModal>
     </>
   )

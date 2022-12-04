@@ -26,3 +26,10 @@
   background-position: center;
   background-size: cover;
 }
+
+.user-to-add-to-room .footer {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-top: 10px;
+}

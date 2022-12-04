@@ -1,0 +1,14 @@
+.app-button {
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--secondary-border-color);
+  padding: 5px 10px;
+  color: var(--primary-text);
+  border-radius: 5px;
+}
+
+.app-button:hover,
+.app-button.active {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--secondary-border-color);
+}
