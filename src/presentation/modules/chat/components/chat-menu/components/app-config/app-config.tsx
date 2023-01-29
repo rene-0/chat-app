@@ -1,25 +1,17 @@
-import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { AppModal } from '@/presentation/components/app-modal/app-modal'
-import { authenticationState } from '@/presentation/components/atom'
+import { useLogout } from '@/presentation/hooks/use-logout'
 import PoweroffOutlined from '@ant-design/icons/lib/icons/PoweroffOutlined'
 import { useState } from 'react'
-import { useResetRecoilState } from 'recoil'
 import './app-config.css'
 
 export function AppConfig(): JSX.Element {
   const [logoutModalVisibility, setLogoutModalVisibility] = useState(false)
-  const resetAuthentication = useResetRecoilState(authenticationState)
 
   const toggleLogoutModal = (): void => {
     setLogoutModalVisibility(!logoutModalVisibility)
   }
 
-  const logOut = (): void => {
-    socketClient.disconnect()
-
-    resetAuthentication()
-    localStorage.removeItem('accessToken')
-  }
+  const logout = useLogout()
 
   return (
     <div className='app-config'>
@@ -44,7 +36,7 @@ export function AppConfig(): JSX.Element {
               Cancelar
             </button>
             <button
-              onClick={logOut}
+              onClick={logout}
               className='app-button'
             >
               Confirmar

@@ -32,9 +32,7 @@ export function Rooms({ remoteFindAllRooms }: Props): JSX.Element {
   useEffect(() => {
     socketClient.on('room/new', (response: RoomModel) => {
       setRooms((oldRooms) => {
-        console.log('oldRooms', oldRooms)
         const newRooms = [...oldRooms]
-        console.log('newRooms', newRooms)
         newRooms.push(response)
 
         return newRooms

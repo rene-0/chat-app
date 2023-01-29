@@ -28,6 +28,7 @@ export function Login({ remoteLogin }: LoginProps): JSX.Element {
 
       setAuthentication(loginResponse)
       localStorage.setItem('accessToken', loginResponse.accessToken.token)
+      localStorage.setItem('whenExpiresInMilliseconds', String(loginResponse.accessToken.expiresIn * 1000 + Date.now()))
     } catch (error) {
       console.log('Erro!')
     }
