@@ -6,11 +6,17 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root,
+.app {
+  min-height: 100vh;
+}
+
 body {
   background-color: #1e1e1e;
   position: relative;
   min-width: 100vh;
-  min-height: 100vh;
   margin: 0px;
 }
 
