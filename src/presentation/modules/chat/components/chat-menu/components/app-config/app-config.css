@@ -1,0 +1,33 @@
+.app-config {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-config .app-button.app-button-config {
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--secondary-border-color);
+  padding: 0px;
+  color: var(--primary-text);
+  border-radius: 5px;
+  width: 30%;
+  font-size: 1.8rem;
+}
+
+.button-holder {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.button-holder button:last-child {
+  margin-left: 10px;
+}
+
+.logout-description {
+  display: block;
+  margin-bottom: 10px;
+}
