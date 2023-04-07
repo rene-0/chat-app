@@ -1,6 +1,7 @@
 import { RoomModel } from '@/domain/models/room/room-model'
 import { FindAllRooms } from '@/domain/usecases/rooms/find-all-rooms'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
+import { Col, Row } from 'antd'
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { roomsState, selectedRoomKeyState } from '../../../atom'
@@ -45,18 +46,26 @@ export function Rooms({ remoteFindAllRooms }: Props): JSX.Element {
   }, [socketClient])
 
   return (
-    <div className='chat-menu-rooms'>
-      {useRooms.map((room) => (
-        <Room
-          onClick={() => handleSelectRoom(room.idRoom)}
-          active={room.idRoom === useSelectedRoom}
-          key={room.idRoom}
-          image={'./manga.jpg'}
-          name={room.name}
-          lastMessage={room.lastMessage}
-          lastMessageTime={room.lastMessageTime}
-        />
+    <Row
+      gutter={[0, 10]}
+      className='chat-menu-rooms'
+    >
+      {useRooms.map((room, index) => (
+        <Col
+          span='24'
+          key={index}
+        >
+          <Room
+            onClick={() => handleSelectRoom(room.idRoom)}
+            active={room.idRoom === useSelectedRoom}
+            key={room.idRoom}
+            image={'./manga.jpg'}
+            name={room.name}
+            lastMessage={room.lastMessage}
+            lastMessageTime={room.lastMessageTime}
+          />
+        </Col>
       ))}
-    </div>
+    </Row>
   )
 }

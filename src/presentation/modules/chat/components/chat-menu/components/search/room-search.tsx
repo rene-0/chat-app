@@ -1,16 +1,19 @@
+import { Card, Input } from 'antd'
 import { useState } from 'react'
-import './room-search.css'
 
 export function RoomSearch(): JSX.Element {
   const [searchValue, setSearchValue] = useState('')
 
   return (
-    <div className='chat-menu-search'>
-      <input
+    <Card
+      className='room-search'
+      size='small'
+    >
+      <Input
         type='text'
         value={searchValue}
         onChange={(event) => setSearchValue(event.currentTarget.value)}
       />
-    </div>
+    </Card>
   )
 }

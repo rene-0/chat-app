@@ -1,55 +1,11 @@
-.chat-room {
+.chat-room .room-avatar {
   width: 100%;
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  gap: 5px;
-  padding: 10px;
-  margin-bottom: 5px;
-  background-color: var(--primary-color);
-  border: 1px solid var(--primary-border-color);
+  height: 100%;
   border-radius: 5px;
-  transition: 0.5s ease-in-out;
-  cursor: pointer;
 }
 
 .chat-room:hover,
 .chat-room.active {
   background-color: var(--secondary-color);
   border: 1px solid var(--secondary-border-color);
-}
-
-.chat-room .room-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 5px;
-  background-repeat: no-repeat, repeat;
-  background-position: center;
-  background-size: cover;
-}
-
-.chat-room .room-body {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.chat-room .room-body .room-title {
-  font-size: 1em;
-  width: 80%;
-}
-
-.chat-room .room-body .room-last-time {
-  font-size: 0.8em;
-  font-weight: 200;
-  text-align: right;
-  width: 20%;
-  padding-right: 5px;
-  box-sizing: border-box;
-}
-
-.chat-room .room-body .room-last-message {
-  font-size: 0.9em;
-  font-weight: 200;
-  width: 100%;
 }

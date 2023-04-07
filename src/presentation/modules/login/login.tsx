@@ -2,9 +2,13 @@ import { LoginUser } from '@/domain/usecases/authentication/login-user'
 import { handlePressEnter } from '@/infra/helpers/handle-press-enter/handle-press-enter'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { authenticationState } from '@/presentation/components/atom'
+import { Button, Card, Col, Input, Row } from 'antd'
+import Typography from 'antd/es/typography'
 import { useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 import './login.css'
+
+const { Title, Text } = Typography
 
 type LoginProps = {
   remoteLogin: LoginUser
@@ -36,27 +40,38 @@ export function Login({ remoteLogin }: LoginProps): JSX.Element {
 
   return (
     <div className='login'>
-      <div className='login-container'>
-        <h2>Login</h2>
-        <div className='login-item'>
-          <span>E-mail:</span>
-          <input
-            type='mail'
-            value={email}
-            onChange={(event) => setEmail(event.currentTarget.value)}
-          />
-        </div>
-        <div className='login-item'>
-          <span>Senha:</span>
-          <input
-            type='password'
-            value={password}
-            onChange={(event) => setPassword(event.currentTarget.value)}
-            onKeyDown={(event) => handlePressEnter(event, handleLogin)}
-          />
-        </div>
-        <button onClick={handleLogin}>Enviar</button>
-      </div>
+      <Card className='login-container'>
+        <Row gutter={[0, 15]}>
+          <Col span='24'>
+            <Title>Login</Title>
+          </Col>
+          <Col span='24'>
+            <Text>E-mail:</Text>
+            <Input
+              type='email'
+              value={email}
+              onChange={(event) => setEmail(event.currentTarget.value)}
+            />
+          </Col>
+          <Col span='24'>
+            <Text>Senha:</Text>
+            <Input
+              type='password'
+              value={password}
+              onChange={(event) => setPassword(event.currentTarget.value)}
+              onKeyDown={(event) => handlePressEnter(event, handleLogin)}
+            />
+          </Col>
+          <Col span='24'>
+            <Button
+              className='login-button'
+              onClick={handleLogin}
+            >
+              Enviar
+            </Button>
+          </Col>
+        </Row>
+      </Card>
     </div>
   )
 }

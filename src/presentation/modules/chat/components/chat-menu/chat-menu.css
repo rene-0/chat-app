@@ -1,8 +1,11 @@
 .chat-menu {
-  width: 20%;
-  height: 100%;
+  width: 400px;
 }
 
-.inferior-menu {
-  display: flex;
+.room-search-container {
+  margin-bottom: 15px;
+}
+
+.app-config {
+  margin-top: auto;
 }

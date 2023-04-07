@@ -1,3 +1,4 @@
+import { Card, Col, Row } from 'antd'
 import dayjs from 'dayjs'
 import { MouseEventHandler } from 'react'
 import './room.css'
@@ -11,23 +12,50 @@ type RoomProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, H
   onClick?: MouseEventHandler<HTMLDivElement> | undefined
 }
 
-export function Room({ image, name, lastMessage, lastMessageTime, active = false, ...rest }: RoomProps): JSX.Element {
+export function Room({ image, name, lastMessage, lastMessageTime, active = false, onClick }: RoomProps): JSX.Element {
   const parsedDay = lastMessageTime ? dayjs(lastMessageTime).format('DD/MM/YY') : ''
 
   return (
-    <div
-      className={`chat-room ${active ? 'active' : ''}`}
-      {...rest}
+    <Card
+      className={`chat-room ${active ? 'active' : 'chat-room'}`}
+      onClick={onClick}
+      size='small'
     >
-      <div
-        className='room-avatar'
-        style={{ backgroundImage: `url("${image}")` }}
-      />
-      <div className='room-body'>
-        <div className='room-title'>{name}</div>
-        <div className='room-last-time'>{parsedDay}</div>
-        <div className='room-last-message'>{lastMessage || 'Nenhuma mensagem'}</div>
-      </div>
-    </div>
+      <Row>
+        <Col span='24'>
+          <Row gutter={[5, 5]}>
+            <Col flex='60px'>
+              <img
+                src={image}
+                alt='avatar'
+                className='room-avatar'
+              />
+            </Col>
+            <Col flex='auto'>
+              <Row className='room-body'>
+                <Col
+                  flex='auto'
+                  className='room-title'
+                >
+                  {name}
+                </Col>
+                <Col
+                  flex='60px'
+                  className='room-last-time'
+                >
+                  {parsedDay}
+                </Col>
+                <Col
+                  span='24'
+                  className='room-last-message'
+                >
+                  {lastMessage || 'Nenhuma mensagem'}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Card>
   )
 }
