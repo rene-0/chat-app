@@ -1,22 +1,22 @@
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { editingMessageKeyState, selectedRoomKeyState } from '@/presentation/modules/chat/components/atom'
-import { useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import './message-actions.css'
+import { Button, Dropdown, MenuProps, Modal } from 'antd'
+import { ExclamationCircleFilled, InfoOutlined } from '@ant-design/icons'
+
+const { confirm } = Modal
 
 type MessageActionsProps = {
   idMessage: number
+  deleted: boolean
 }
 
-export function MessageActions({ idMessage }: MessageActionsProps): JSX.Element {
+export function MessageActions({ idMessage, deleted }: MessageActionsProps): JSX.Element {
   const useSelectedRoomKey = useRecoilValue(selectedRoomKeyState)
-
-  const [isDropdownVisible, setIsDropDownVisible] = useState(false)
 
   const setEditingMessageKey = useSetRecoilState(editingMessageKeyState)
 
   const handleEdit = (): void => {
-    setIsDropDownVisible(false)
     setEditingMessageKey(idMessage)
   }
 
@@ -25,31 +25,61 @@ export function MessageActions({ idMessage }: MessageActionsProps): JSX.Element 
       idRoom: useSelectedRoomKey,
       idMessage,
     })
-    setIsDropDownVisible(false)
   }
+
+  const showConfirm = () => {
+    if (deleted) {
+      return
+    }
+    confirm({
+      title: 'Tem certeza que deseja remover essa mensagem ?',
+      icon: <ExclamationCircleFilled />,
+      width: 500,
+      onOk: handleDelete,
+    })
+  }
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <Button
+          size='small'
+          type='ghost'
+          onClick={handleEdit}
+        >
+          Editar
+        </Button>
+      ),
+    },
+    {
+      key: '2',
+      disabled: deleted,
+      label: (
+        <Button
+          size='small'
+          type='ghost'
+          onClick={showConfirm}
+          disabled={deleted}
+        >
+          Deletar
+        </Button>
+      ),
+    },
+  ]
 
   return (
     <div className='message-action'>
-      <div
-        onClick={() => setIsDropDownVisible(!isDropdownVisible)}
-        className='message-action-icon'
+      <Dropdown
+        trigger={['click']}
+        menu={{ items }}
       >
-        i
-      </div>
-      <div className={`message-actions-dropdown ${isDropdownVisible ? 'active' : ''}`}>
-        <div
-          onClick={handleEdit}
-          className='message-actions-dropdown-item'
-        >
-          Editar
-        </div>
-        <div
-          onClick={handleDelete}
-          className='message-actions-dropdown-item'
-        >
-          Deletar
-        </div>
-      </div>
+        <Button
+          size='small'
+          type='ghost'
+          icon={<InfoOutlined />}
+        />
+      </Dropdown>
     </div>
   )
 }

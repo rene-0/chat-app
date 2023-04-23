@@ -6,13 +6,15 @@ import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import './users-to-add-to-room.css'
+import { Col, Modal, Row } from 'antd'
 
 type Props = {
   findUsersToAddToRoom: FindUsersToAddToRoom
   handleCloseModal: () => void
+  isModalActive: boolean
 }
 
-export function UsersToAddToRoom({ findUsersToAddToRoom, handleCloseModal }: Props): JSX.Element {
+export function UsersToAddToRoom({ findUsersToAddToRoom, handleCloseModal, isModalActive }: Props): JSX.Element {
   const [usersToBeAdded, setUsersToBeAdded] = useState<FindUsersToAddToRoom.Response>([])
   const [selectedUsers, setSelectedUsers] = useState<number[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -55,38 +57,44 @@ export function UsersToAddToRoom({ findUsersToAddToRoom, handleCloseModal }: Pro
 
   // transformar os itens em um componente separado e user React.memo
   return (
-    <div className='user-to-add-to-room'>
-      {isLoading ? (
-        <LoadingOutlined />
-      ) : (
-        <div className='user-list'>
-          {usersToBeAdded.map((item) => (
-            <div
-              className={`user-item ${selectedUsers.findIndex((user) => user === item.idUser) >= 0 ? 'active' : ''}`}
-              key={item.idUser}
-              onClick={() => toggleSelectUser(item.idUser)}
-            >
-              <div
-                className='user-avatar'
-                style={{ backgroundImage: 'url("./manga.jpg")' }}
-              />
-              <div className='user-body'>
-                <div className='user-name'>{item.name}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className='footer'>
-        <button
-          disabled={selectedUsers.length <= 0}
-          className='app-button'
-          onClick={() => handleAddUser()}
-        >
-          Adicionar
-        </button>
+    <Modal
+      title='Adicionar usuário'
+      open={isModalActive}
+      onCancel={() => handleCloseModal()}
+      onOk={handleAddUser}
+      okText='Adicionar'
+      cancelText='Cancelar'
+    >
+      <div className='user-to-add-to-room'>
+        {isLoading ? (
+          <LoadingOutlined />
+        ) : (
+          <Row>
+            {usersToBeAdded.map((item) => (
+              <Col
+                className={`user-item ${selectedUsers.findIndex((user) => user === item.idUser) >= 0 ? 'active' : ''}`}
+                span={24}
+                key={item.idUser}
+                onClick={() => toggleSelectUser(item.idUser)}
+              >
+                <Row gutter={[5, 5]}>
+                  <Col flex='50px'>
+                    <div
+                      className='user-avatar'
+                      style={{ backgroundImage: 'url("./manga.jpg")' }}
+                    />
+                  </Col>
+                  <Col flex='1'>
+                    <div className='user-body'>
+                      <div className='user-name'>{item.name}</div>
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+            ))}
+          </Row>
+        )}
       </div>
-    </div>
+    </Modal>
   )
 }

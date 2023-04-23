@@ -5,6 +5,7 @@ import { EditMessage } from './components/edit-message/edit-message'
 import { MessageActions } from './components/message-actions/message-actions'
 import { MessageText } from './components/message-text/message-text'
 import './message.css'
+import { Card, Col, Row } from 'antd'
 
 export type MessageProps = {
   idMessage: number
@@ -22,12 +23,21 @@ export function Message({ idMessage, user, time, message, you, edited, deleted }
   const parsedTime = dayjs(time).format('DD/MM/YYYY HH:mm')
 
   return (
-    <div className={`message ${you ? 'you' : ''}`}>
-      <div className='message-head'>
-        <div className='message-user'>{user}</div>
-        <div className='message-time'>{parsedTime}</div>
-        {you ? <MessageActions idMessage={idMessage} /> : <></>}
-      </div>
+    <Card className={`message ${you ? 'you' : ''}`}>
+      <Row>
+        <Col flex='auto'>{user}</Col>
+        <Col flex='110px'>{parsedTime}</Col>
+        <Col flex='20px'>
+          {you ? (
+            <MessageActions
+              idMessage={idMessage}
+              deleted={deleted}
+            />
+          ) : (
+            <></>
+          )}
+        </Col>
+      </Row>
       {useEditingMessageKey === idMessage ? (
         <EditMessage idMessage={idMessage} />
       ) : (
@@ -37,6 +47,6 @@ export function Message({ idMessage, user, time, message, you, edited, deleted }
           deleted={deleted}
         />
       )}
-    </div>
+    </Card>
   )
 }

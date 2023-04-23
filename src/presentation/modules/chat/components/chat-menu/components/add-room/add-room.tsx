@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './add-room.css'
 import { AddRoomModal } from './components/add-room-modal/add-room-modal'
+import { Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 export function AddRoom() {
   const [modalVisibility, setModalVisibility] = useState(false)
@@ -15,12 +17,11 @@ export function AddRoom() {
         modalVisibility={modalVisibility}
         onClose={onClose}
       />
-      <button
+      <Button
+        icon={<PlusOutlined />}
         className='add-room-container-button'
         onClick={() => setModalVisibility(true)}
-      >
-        +
-      </button>
+      />
     </div>
   )
 }

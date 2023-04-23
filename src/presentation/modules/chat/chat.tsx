@@ -11,6 +11,7 @@ import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { FindUsersToAddToRoom } from '@/domain/usecases/users/find-users-to-add-to-room'
 import { authenticationState } from '@/presentation/components/atom'
 import { useLogout } from '@/presentation/hooks/use-logout'
+import { Col, Row } from 'antd'
 
 type Props = {
   remoteFindAllRooms: FindAllRooms
@@ -50,16 +51,23 @@ export function Chat({ remoteFindAllRooms, remoteSearchRoomMessages, findUsersTo
   }, [])
 
   return (
-    <div className='chat'>
-      <ChatMenu remoteFindAllRooms={remoteFindAllRooms} />
+    <Row
+      className='chat'
+      gutter={[10, 0]}
+    >
+      <Col flex='400px'>
+        <ChatMenu remoteFindAllRooms={remoteFindAllRooms} />
+      </Col>
       {useSelectedRoomKey !== 0 ? (
-        <ChatMessage
-          findUsersToAddToRoom={findUsersToAddToRoom}
-          remoteSearchRoomMessages={remoteSearchRoomMessages}
-        />
+        <Col flex='auto'>
+          <ChatMessage
+            findUsersToAddToRoom={findUsersToAddToRoom}
+            remoteSearchRoomMessages={remoteSearchRoomMessages}
+          />
+        </Col>
       ) : (
         <></>
       )}
-    </div>
+    </Row>
   )
 }

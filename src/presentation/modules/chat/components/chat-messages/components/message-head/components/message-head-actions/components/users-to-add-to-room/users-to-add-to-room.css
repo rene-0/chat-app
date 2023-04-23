@@ -1,15 +1,9 @@
 .user-item {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  gap: 5px;
   padding: 10px;
-  margin-bottom: 5px;
-  background-color: var(--primary-color);
-  border: 1px solid var(--primary-border-color);
   border-radius: 5px;
-  transition: 0.5s ease-in-out;
   cursor: pointer;
+  transition: 0.5s ease-in-out;
+  border: 1px solid var(--primary-border-color);
 }
 
 .user-item:hover,
@@ -25,11 +19,4 @@
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-}
-
-.user-to-add-to-room .footer {
-  width: 100%;
-  display: flex;
-  justify-content: end;
-  margin-top: 10px;
 }

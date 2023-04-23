@@ -3,6 +3,9 @@ import { useRecoilValue } from 'recoil'
 import { selectedRoomSelector } from '../../../atom'
 import { MessageHeadActions } from './components/message-head-actions/message-head-actions'
 import './message-head.css'
+import { Badge, Card, Col, Row, Space, Typography } from 'antd'
+
+const { Title } = Typography
 
 type Props = {
   findUsersToAddToRoom: FindUsersToAddToRoom
@@ -12,21 +15,44 @@ export function MessageHead({ findUsersToAddToRoom }: Props) {
   const selectedRoom = useRecoilValue(selectedRoomSelector)
 
   return (
-    <div className='chat-message-head'>
-      <div
-        className='message-head-avatar'
-        style={{ backgroundImage: 'url("./manga.jpg")' }}
-      />
-      <div className='message-container'>
-        <div className='message-head-name'>{selectedRoom?.name}</div>
-        <div className='message-head-action'>
-          <MessageHeadActions findUsersToAddToRoom={findUsersToAddToRoom} />
-        </div>
-        <div className='message-head-status'>
-          <div className='status'></div>
-          <span>Online</span>
-        </div>
-      </div>
-    </div>
+    <Card className='chat-message-head'>
+      <Row>
+        <Col
+          flex='60px'
+          className='message-head-avatar'
+          style={{ backgroundImage: 'url("./manga.jpg")' }}
+        />
+        <Col flex='auto'>
+          <Row>
+            <Col
+              span={24}
+              className='message-container'
+            >
+              <Row>
+                <Col flex='1'>
+                  <Title
+                    className='chat-head-title'
+                    level={5}
+                  >
+                    {selectedRoom?.name}
+                  </Title>
+                </Col>
+                <Col flex='30px'>
+                  <MessageHeadActions findUsersToAddToRoom={findUsersToAddToRoom} />
+                </Col>
+              </Row>
+              <Row>
+                <Col className='message-head-status'>
+                  <Space size={3}>
+                    <Badge status='success' />
+                    <span>Online</span>
+                  </Space>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Card>
   )
 }

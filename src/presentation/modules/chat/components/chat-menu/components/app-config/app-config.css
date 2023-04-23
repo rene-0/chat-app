@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
 }
-
+/*
 .app-config .app-button.app-button-config {
   cursor: pointer;
   background-color: var(--secondary-color);
@@ -30,4 +30,4 @@
 .logout-description {
   display: block;
   margin-bottom: 10px;
-}
+} */

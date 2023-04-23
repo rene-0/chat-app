@@ -1,4 +1,3 @@
-import { handlePressEnter } from '@/infra/helpers/handle-press-enter/handle-press-enter'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { selectedRoomKeyState } from '@/presentation/modules/chat/components/atom'
 import { SendOutlined } from '@ant-design/icons'
@@ -6,6 +5,7 @@ import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import './message-input.css'
+import { Button, Input } from 'antd'
 
 export function MessageInput() {
   const useSelectedRoomKey = useRecoilValue(selectedRoomKeyState)
@@ -21,17 +21,18 @@ export function MessageInput() {
 
   return (
     <div className='message-input'>
-      <input
+      <Input
         type='text'
         value={message}
         onChange={(event) => {
           setMessage(event.currentTarget.value)
         }}
-        onKeyDown={(event) => handlePressEnter(event, sendMessage)}
+        onPressEnter={() => sendMessage()}
       />
-      <button onClick={sendMessage}>
-        <SendOutlined />
-      </button>
+      <Button
+        icon={<SendOutlined />}
+        onClick={sendMessage}
+      />
     </div>
   )
 }

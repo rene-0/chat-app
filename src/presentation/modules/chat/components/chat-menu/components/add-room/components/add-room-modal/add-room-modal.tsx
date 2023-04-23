@@ -1,8 +1,7 @@
-import { handlePressEnter } from '@/infra/helpers/handle-press-enter/handle-press-enter'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
-import { AppModal } from '@/presentation/components/app-modal/app-modal'
 import { useState } from 'react'
-import './add-room-modal.css'
+import { Input, Modal } from 'antd'
+import FormItem from 'antd/es/form/FormItem'
 
 type Props = {
   modalVisibility: boolean
@@ -25,25 +24,22 @@ export function AddRoomModal({ modalVisibility, onClose }: Props) {
   }
 
   return (
-    <AppModal
-      title='Criar sala'
-      visible={modalVisibility}
-      onClose={handleClose}
+    <Modal
+      title='Criar nova sala'
+      open={modalVisibility}
+      onOk={handleCreateRoom}
+      onCancel={onClose}
+      okText='Criar'
+      cancelText='Cancelar'
     >
-      <>
-        <input
+      <FormItem label='Nome da sala'>
+        <Input
           className='add-room-input'
           value={roomName}
           onChange={(event) => setRoomName(event.currentTarget.value)}
-          onKeyDown={(event) => handlePressEnter(event, handleCreateRoom)}
+          onPressEnter={handleCreateRoom}
         />
-        <button
-          className='add-room-button'
-          onClick={handleCreateRoom}
-        >
-          Criar
-        </button>
-      </>
-    </AppModal>
+      </FormItem>
+    </Modal>
   )
 }

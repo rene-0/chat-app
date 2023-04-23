@@ -1,3 +1,7 @@
+.chat-room .ant-card-body {
+  padding: 6px;
+}
+
 .chat-room .room-avatar {
   width: 100%;
   height: 100%;
@@ -8,4 +12,8 @@
 .chat-room.active {
   background-color: var(--secondary-color);
   border: 1px solid var(--secondary-border-color);
+}
+
+.chat-room .room-title {
+  font-weight: 600;
 }

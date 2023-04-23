@@ -2,10 +2,14 @@
   width: 98%;
   padding: 10px;
   margin-bottom: 5px;
-  background-color: var(--primary-color);
-  border: 1px solid var(--primary-border-color);
+  /* background-color: var(--primary-color);
+  border: 1px solid var(--primary-border-color); */
   border-radius: 5px;
-  --message-action-width: 15px;
+  padding: 0px;
+}
+
+.message .ant-card-body {
+  padding: 5px;
 }
 
 .message.you {
@@ -17,17 +21,4 @@
 .message .message-head {
   display: flex;
   margin-bottom: 5px;
-}
-
-.message .message-head .message-user {
-  width: 90%;
-  font-size: 1.13rem;
-  font-weight: 600;
-}
-
-.message .message-head .message-time {
-  width: calc(10% - var(--message-action-width));
-  text-align: right;
-  font-weight: 100;
-  font-size: 0.85rem;
 }

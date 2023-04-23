@@ -1,11 +1,10 @@
-import { handlePressEnter } from '@/infra/helpers/handle-press-enter/handle-press-enter'
 import { socketClient } from '@/infra/web-socket/socket-io/socket-io-client'
 import { editingMessageKeyState, selectedRoomKeyState } from '@/presentation/modules/chat/components/atom'
 import CloseOutlined from '@ant-design/icons/lib/icons/CloseOutlined'
 import SendOutlined from '@ant-design/icons/lib/icons/SendOutlined'
 import { useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import './edit-message.css'
+import { Button, Col, Input, Row } from 'antd'
 
 type EditMessageProps = {
   idMessage: number
@@ -40,18 +39,28 @@ export function EditMessage({ idMessage }: EditMessageProps): JSX.Element {
 
   return (
     <div className='message-body'>
-      <button onClick={closeEditing}>
-        <CloseOutlined />
-      </button>
-      <input
-        type='text'
-        value={editedMessage}
-        onChange={(event) => setEditedMessage(event.currentTarget.value)}
-        onKeyDown={(event) => handlePressEnter(event, updateMessage)}
-      />
-      <button onClick={updateMessage}>
-        <SendOutlined />
-      </button>
+      <Row gutter={[10, 10]}>
+        <Col flex='20px'>
+          <Button
+            onClick={closeEditing}
+            icon={<CloseOutlined />}
+          />
+        </Col>
+        <Col flex='1'>
+          <Input
+            type='text'
+            value={editedMessage}
+            onChange={(event) => setEditedMessage(event.currentTarget.value)}
+            onPressEnter={updateMessage}
+          />
+        </Col>
+        <Col flex='20px'>
+          <Button
+            icon={<SendOutlined />}
+            onClick={updateMessage}
+          />
+        </Col>
+      </Row>
     </div>
   )
 }

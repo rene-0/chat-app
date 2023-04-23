@@ -19,7 +19,6 @@ export function Room({ image, name, lastMessage, lastMessageTime, active = false
     <Card
       className={`chat-room ${active ? 'active' : 'chat-room'}`}
       onClick={onClick}
-      size='small'
     >
       <Row>
         <Col span='24'>
